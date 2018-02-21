@@ -26,7 +26,7 @@ function GetSystemInfos {
 
 function CheckRootUser {
     if [ "`id -u`" != "0" ]; then
-        errorExit "You are not root!"
+        echo "You are not root! Abort."
         exit
     fi
 }
@@ -42,6 +42,14 @@ function Install {
     rm /etc/update-motd.d/* -R -f
 }
 
+function CheckInstallation {
+    if [ ! -f .installed ]; then
+        echo "Already installed! Abort."
+        exit
+    fi
+    echo "true" > .installed
+}
+
 ### Main ###
 
 OS=$(uname -s)
@@ -50,4 +58,5 @@ VER=$(uname -r)
 CheckRootUser
 GetSystemInfos
 # Todo AAP: Check Version
+CheckInstallation
 Install
