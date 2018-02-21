@@ -47,7 +47,7 @@ function Install {
 OS=$(uname -s)
 VER=$(uname -r)
 
-CheckRootUser()
-GetSystemInfos()
+CheckRootUser
+GetSystemInfos
 # Todo AAP: Check Version
-Install()
+Install
