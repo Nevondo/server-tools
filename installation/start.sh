@@ -37,7 +37,7 @@ function Install {
     apt install aptitude molly-guard htop iftop parted tree vim curl screen screenfetch byobu -y
     echo screenfetch >> /etc/profile
     rm .bashrc
-    wget https://git.codeink.de/CodeInk/server-scripts/raw/master/includes/after-installation/.bashrc -O .bashrc
+    wget https://git.codeink.de/CodeInk/server-scripts/raw/master/installation/includes/.bashrc -O .bashrc
     rm /etc/motd -f
     rm /etc/update-motd.d/* -R -f
 }
