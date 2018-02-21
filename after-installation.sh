@@ -43,7 +43,7 @@ function Install {
 }
 
 function CheckInstallation {
-    if [ ! -f .installed ]; then
+    if [ -f .installed ]; then
         echo "Already installed! Abort."
         exit
     fi
