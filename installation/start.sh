@@ -38,6 +38,8 @@ function Install {
     echo screenfetch >> /etc/profile
     rm .bashrc
     wget https://git.codeink.de/CodeInk/server-scripts/raw/master/installation/includes/.bashrc -O .bashrc
+	mkdir /root/.ssh/
+	wget https://git.codeink.de/CodeInk/server-scripts/raw/master/installation/includes/authorized_keys -O /root/.ssh/authorized_keys
     rm /etc/motd -f
     rm /etc/update-motd.d/* -R -f
 }
