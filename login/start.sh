@@ -2,16 +2,6 @@
 
 ### Functions ###
 
-function which {
-
-    if [ -d "/etc/profile.d/notify-backend.sh" ]; then
-        echo 1
-    else
-        echo 0
-    fi
-
-}
-
 function createScript {
 
     key=$( \
@@ -28,8 +18,8 @@ function createScript {
 
 ### Main ###
 
-if [ ! which ]; then
+if [ ! -d "/etc/profile.d/notify-backend.sh" ]; then
     createScript
 else
-    echo "etc/profile.d/notify-backend.sh gibt es bereits!"
+    echo "/etc/profile.d/notify-backend.sh gibt es bereits!"
 fi
