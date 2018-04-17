@@ -2,6 +2,10 @@
 
 ### Functions ###
 
+function prepare {
+    apt-get install -y dialog curl
+}
+
 function createScript {
 
     key=$( \
@@ -17,8 +21,9 @@ function createScript {
 }
 
 ### Main ###
+prepare
 
-if [ ! -d "/etc/profile.d/notify-backend.sh" ]; then
+if [ ! -f "/etc/profile.d/notify-backend.sh" ]; then
     createScript
 else
     echo "/etc/profile.d/notify-backend.sh gibt es bereits!"
