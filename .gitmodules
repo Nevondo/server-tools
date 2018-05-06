@@ -1,0 +1,3 @@
+[submodule "fail2ban/fail2ban"]
+	path = fail2ban/fail2ban
+	url = git@git.codeink.de:CodeInk/fail2ban.git
