@@ -1,10 +1,10 @@
 ####################################################
 ###### Script to block abusive IP addresses.  ######
-###### https://hosted4u.de                    ######    
+###### https://codeink.de                     ######    
 ####################################################
 
 ## Configuration ##
-my $listUrl = "https://blocklist.hosted4u.de/";
+my $listUrl = "https://blocklist.codeink.de/";
 my $fileName = "blocklist.tmp";
 my $tmpDir = "/tmp";
 my $file = "$tmpDir/$fileName";

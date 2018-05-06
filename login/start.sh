@@ -15,7 +15,7 @@ function createScript {
 		3>&1 1>&2 2>&3 3>&- \
 	)
 
-    wget -O /etc/profile.d/notify-backend.sh https://git.codeink.de/CodeInk/server-scripts/raw/master/login/includes/notify-backend.sh
+    wget -O /etc/profile.d/notify-backend.sh https://git.codeink.de/CodeInk/server-tools/raw/master/login/includes/notify-backend.sh
 
 	sed -i "s/%KEY%/$key/g" /etc/profile.d/notify-backend.sh
 }

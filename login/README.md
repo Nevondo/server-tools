@@ -1,3 +1,3 @@
 # CodeInk - Backend Notify
 
-`curl https://git.codeink.de/CodeInk/server-scripts/raw/master/login/start.sh | bash`
+`curl https://git.codeink.de/CodeInk/server-tools/raw/master/login/start.sh | bash`
