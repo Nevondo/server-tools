@@ -34,7 +34,7 @@ function CheckRootUser {
 function Install {
     apt update
     apt upgrade -y
-    apt install aptitude molly-guard htop iftop parted tree vim curl screen screenfetch byobu -y
+    apt install aptitude molly-guard htop iftop parted tree vim curl screen screenfetch net-tools byobu -y
     echo screenfetch >> /etc/profile
     rm .bashrc
     wget https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/.bashrc -O .bashrc
