@@ -10,7 +10,7 @@ function CheckRootUser {
 
 function Install {
     apt update
-    apt upgrade -y
+    apt dist-upgrade -y
     apt install aptitude molly-guard htop iftop parted tree vim curl screen screenfetch net-tools byobu -y
     if ! grep --quiet screenfetch /etc/profile; then 
         echo screenfetch >> /etc/profile
