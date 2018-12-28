@@ -31,7 +31,7 @@ function cleanUp {
 
 function resetPassword {
     pw=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32 ; echo '')
-    echo "root:$pw" | chpassw
+    echo "root:$pw" | chpasswd
     echo "********************************"
     echo "       New root password        "
     echo "$pw"
