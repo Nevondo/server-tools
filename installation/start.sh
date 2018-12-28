@@ -1,29 +1,6 @@
 #!/bin/bash
 
 ### Functions ###
-
-function GetSystemInfos {
-    if [ -f /etc/os-release ]; then
-        # freedesktop.org and systemd
-        . /etc/os-release
-        OS=$NAME
-        VER=$VERSION_ID
-    elif type lsb_release >/dev/null 2>&1; then
-        # linuxbase.org
-        OS=$(lsb_release -si)
-        VER=$(lsb_release -sr)
-    elif [ -f /etc/lsb-release ]; then
-        # For some versions of Debian/Ubuntu without lsb_release command
-        . /etc/lsb-release
-        OS=$DISTRIB_ID
-        VER=$DISTRIB_RELEASE
-    elif [ -f /etc/debian_version ]; then
-        # Older Debian/Ubuntu/etc.
-        OS=Debian
-        VER=$(cat /etc/debian_version)
-    fi
-}
-
 function CheckRootUser {
     if [ "`id -u`" != "0" ]; then
         echo "You are not root! Abort."
@@ -35,30 +12,34 @@ function Install {
     apt update
     apt upgrade -y
     apt install aptitude molly-guard htop iftop parted tree vim curl screen screenfetch net-tools byobu -y
-    echo screenfetch >> /etc/profile
+    if ! grep --quiet screenfetch /etc/profile; then 
+        echo screenfetch >> /etc/profile
+    fi
     rm .bashrc
     wget https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/.bashrc -O .bashrc
 	mkdir /root/.ssh/
 	wget https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/authorized_keys -O /root/.ssh/authorized_keys
     rm /etc/motd -f
     rm /etc/update-motd.d/* -R -f
+    sed -i "/^[#?]*PasswordAuthentication[[:space:]]/c\PasswordAuthentication no" /etc/ssh/sshd_config
+    systemctl restart ssh
 }
 
-function CheckInstallation {
-    if [ -f .installed ]; then
-        echo "Already installed! Abort."
-        exit
-    fi
-    echo "true" > .installed
+function cleanUp {
+    rm /etc/profile.d/notify-backend.sh    
+}
+
+function resetPassword {
+    pw=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32 ; echo '')
+    echo "$pw" | passwd root --stdin
+    echo "********************************"
+    echo "       New root password        "
+    echo "$pw"
+    echo "********************************"
 }
 
 ### Main ###
-
-OS=$(uname -s)
-VER=$(uname -r)
-
 CheckRootUser
-GetSystemInfos
-# Todo AAP: Check Version
-CheckInstallation
 Install
+cleanUp
+resetPassword
