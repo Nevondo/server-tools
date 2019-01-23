@@ -12,16 +12,24 @@ function Install {
     apt update
     apt dist-upgrade -y
     apt install aptitude molly-guard htop iftop parted tree vim curl screen screenfetch net-tools byobu xinetd -y
-    curl https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/check-mk-agent_1.5.0p9-1_all.deb | dpkg -i
+
+    wget https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/check-mk-agent_1.5.0p9-1_all.deb -O /tmp/check-mk-agent_1.5.0p9-1_all.deb
+    dpkg -i /tmp/check-mk-agent_1.5.0p9-1_all.deb
+    rm /tmp/check-mk-agent_1.5.0p9-1_all.deb
+
     if ! grep --quiet screenfetch /etc/profile; then 
         echo screenfetch >> /etc/profile
     fi
+
     rm .bashrc
     wget https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/.bashrc -O .bashrc
+
 	mkdir /root/.ssh/
 	wget https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/authorized_keys -O /root/.ssh/authorized_keys
+
     rm /etc/motd -f
     rm /etc/update-motd.d/* -R -f
+    
     sed -i "/^[#?]*PasswordAuthentication[[:space:]]/c\PasswordAuthentication no" /etc/ssh/sshd_config
     systemctl restart ssh
 }
