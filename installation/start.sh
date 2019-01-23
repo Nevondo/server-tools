@@ -1,10 +1,10 @@
 #!/bin/bash
 
 ### Variables ###
-TMP = "/tmp" 
-CHECK_MK = "https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/check-mk-agent_1.5.0p9-1_all.deb"
-BASHRC = "https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/.bashrc"
-SSH_KEYS = "https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/authorized_keys"
+TMP="/tmp" 
+CHECK_MK="https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/check-mk-agent_1.5.0p9-1_all.deb"
+BASHRC="https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/.bashrc"
+SSH_KEYS="https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/authorized_keys"
 
 ### Functions ###
 function CheckRootUser {
