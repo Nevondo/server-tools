@@ -25,10 +25,6 @@ function Install {
     systemctl restart ssh
 }
 
-function cleanUp {
-    rm /etc/profile.d/notify-backend.sh    
-}
-
 function resetPassword {
     pw=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32 ; echo '')
     echo "root:$pw" | chpasswd
@@ -41,5 +37,4 @@ function resetPassword {
 ### Main ###
 CheckRootUser
 Install
-cleanUp
 resetPassword
