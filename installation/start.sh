@@ -15,42 +15,42 @@ function CheckRootUser {
 }
 
 function Update {
-    apt update
-    apt dist-upgrade -y
-    apt autoremove -y
+    apt update &>/dev/null
+    apt dist-upgrade -y &>/dev/null
+    apt autoremove -y &>/dev/null
 }
 
 function InstallPackages {
-    apt install aptitude molly-guard htop iftop parted tree vim curl screen screenfetch net-tools byobu xinetd -y
+    apt install aptitude molly-guard htop iftop parted tree vim curl screen screenfetch net-tools byobu xinetd -y &>/dev/null
 }
 
 function SetupMonitoring {
-    wget $CHECK_MK -O ${TMP}/check-mk-agent_1.5.0p9-1_all.deb
-    dpkg -i ${TMP}/check-mk-agent_1.5.0p9-1_all.deb
+    wget $CHECK_MK -O ${TMP}/check-mk-agent_1.5.0p9-1_all.deb &>/dev/null
+    dpkg -i ${TMP}/check-mk-agent_1.5.0p9-1_all.deb &>/dev/null
 }
 
 function SetupScreenfetch {
-    if ! grep --quiet screenfetch /etc/profile; then 
-        echo screenfetch >> /etc/profile
+    if ! grep --quiet screenfetch /etc/profile; then  &>/dev/null
+        echo screenfetch >> /etc/profile &>/dev/null
     fi
 }
 
 function SetupBashrc {
-    rm .bashrc
-    wget $BASHRC -O .bashrc
+    rm .bashrc &>/dev/null
+    wget $BASHRC -O .bashrc &>/dev/null
 }
 
 function SetupSsh {
-	mkdir /root/.ssh/
-	wget $SSH_KEYS -O /root/.ssh/authorized_keys
-    sed -i "/^[#?]*PasswordAuthentication[[:space:]]/c\PasswordAuthentication no" /etc/ssh/sshd_config
-    systemctl restart ssh
+	mkdir /root/.ssh/ &>/dev/null
+	wget $SSH_KEYS -O /root/.ssh/authorized_keys &>/dev/null
+    sed -i "/^[#?]*PasswordAuthentication[[:space:]]/c\PasswordAuthentication no" /etc/ssh/sshd_config &>/dev/null
+    systemctl restart ssh &>/dev/null
 }
 
 function CleanUp {
-    rm /etc/motd -f
-    rm /etc/update-motd.d/* -R -f
-    rm ${TMP}/check-mk-agent_1.5.0p9-1_all.deb
+    rm /etc/motd -f &>/dev/null
+    rm /etc/update-motd.d/* -R -f &>/dev/null
+    rm ${TMP}/check-mk-agent_1.5.0p9-1_all.deb &>/dev/null
 }
 
 function SetRootPassword {
