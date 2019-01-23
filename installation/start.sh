@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### Variables ###
-TMP="/tmp" 
+TMP="/tmp"
 CHECK_MK="https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/check-mk-agent_1.5.0p9-1_all.deb"
 BASHRC="https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/.bashrc"
 SSH_KEYS="https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/authorized_keys"
@@ -30,7 +30,7 @@ function SetupMonitoring {
 }
 
 function SetupScreenfetch {
-    if ! grep --quiet screenfetch /etc/profile; then 
+    if ! grep --quiet screenfetch /etc/profile; then
         echo screenfetch >> /etc/profile
     fi
 }
@@ -41,14 +41,14 @@ function SetupBashrc {
 }
 
 function SetupSsh {
-	mkdir /root/.ssh/
-	wget $SSH_KEYS -O /root/.ssh/authorized_keys
+    mkdir /root/.ssh/
+    wget $SSH_KEYS -O /root/.ssh/authorized_keys
     sed -i "/^[#?]*PasswordAuthentication[[:space:]]/c\PasswordAuthentication no" /etc/ssh/sshd_config
     systemctl restart ssh
 }
 
 function SetupQemuAgent {
-    if lscpu | grep "Hypervisor vendor:     KVM"; then 
+    if lscpu | grep "Hypervisor vendor:     KVM"; then
         apt install qemu-guest-agent
     fi
 }
