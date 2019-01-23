@@ -12,7 +12,7 @@ function Install {
     apt update
     apt dist-upgrade -y
     apt install aptitude molly-guard htop iftop parted tree vim curl screen screenfetch net-tools byobu xinetd -y
-    wget https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/check-mk-agent_1.5.0p9-1_all.deb | dpkg -i
+    curl https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/check-mk-agent_1.5.0p9-1_all.deb | dpkg -i
     if ! grep --quiet screenfetch /etc/profile; then 
         echo screenfetch >> /etc/profile
     fi
