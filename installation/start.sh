@@ -47,6 +47,12 @@ function SetupSsh {
     systemctl restart ssh
 }
 
+function SetupQemuAgent {
+    if lscpu | grep "Hypervisor vendor:     KVM"; then 
+        apt install qemu-guest-agent
+    fi
+}
+
 function CleanUp {
     rm /etc/motd -f
     rm /etc/update-motd.d/* -R -f
@@ -70,5 +76,6 @@ SetupMonitoring
 SetupScreenfetch
 SetupBashrc
 SetupSsh
+SetupQemuAgent
 CleanUp
 SetRootPassword
