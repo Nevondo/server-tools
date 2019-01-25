@@ -49,7 +49,7 @@ function SetupSsh {
 
 function SetupQemuAgent {
     if lscpu | grep "Hypervisor vendor:     KVM"; then
-        apt install qemu-guest-agent
+        apt install qemu-guest-agent -y
     fi
 }
 
