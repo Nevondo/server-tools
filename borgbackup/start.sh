@@ -88,7 +88,7 @@ function setupScript {
     sed -i "s/%USER%/$user/g" $BACKUP_SH_PATH
     sed -i "s/%HOST%/$host/g" $BACKUP_SH_PATH
     #sed -i "s/%REPO_PATH%/$repo_path/g" $BACKUP_SH_PATH
-    sed -i 's|%REPO_PATH%|'$repo_path'|g' BACKUP_SH_PATH
+    sed -i 's|%REPO_PATH%|'$repo_path'|g' $BACKUP_SH_PATH
     #sed "s~%REPO_PATH%~$repo_path~" $BACKUP_SH_PATH
     sed -i "s/%PASSPHRASE%/$password/g" $BACKUP_SH_PATH
     sed -i "s/%COMPRESSION%/$compression/g" $BACKUP_SH_PATH
