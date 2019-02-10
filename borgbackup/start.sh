@@ -103,8 +103,8 @@ function initRepo {
 
 function preCmd {
     yellowMessage "Are there commands or scripts that should be executed before the backup? \n"
-    read -p"(y/n)? " response_pre
-    if [ "$response" == "y" ]; then
+    read -p"(y/n)?" response_pre
+    if [ "$response_pre" == "y" ]; then
         nano $BACKUP_SH_DIR/precmd.sh
     fi
 }
