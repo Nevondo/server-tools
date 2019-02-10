@@ -97,7 +97,7 @@ function setupScript {
 }
 
 function initRepo {
-    export BORG_REPO=ssh:/$user@$host:22/$repo_path
+    export BORG_REPO=ssh://$user@$host:22/$repo_path
     borg init 
 }
 
