@@ -56,13 +56,13 @@ function motd {
 function readAuth {
     echo -e "Remote Host:\n"
     read host
-    echo -e "Remote User:\n"
+    echo -e "\nRemote User:\n"
     read user
-    echo -e "Repository Compression:\n"
+    echo -e "\nRepository Compression:\n"
     read path
-    echo -e "Repository Path:\n"
+    echo -e "\nRepository Path:\n"
     read path
-    echo -e "Repository Passphrase:\n"
+    echo -e "\nRepository Passphrase:\n"
     read -s password
 }
 
@@ -77,6 +77,7 @@ function showSSHKey {
     yellowMessage "Add the public ssh key on remote host.\n"
     echo -e "mkdir -m 0700 ~/.ssh \nnano .ssh/authorized_keys //Hier den Key einfügen \nchmod 600 .ssh/authorized_keys \n"
     cat ~/.ssh/id_rsa.pub 
+    read -p"Finished (j)? " response_finished
 }
 
 function setupScript {
@@ -109,3 +110,4 @@ initRepo
 
 
 
+wget  https://git.codeink.de/CodeInk/server-tools/raw/master/borgbackup/start.sh; chmod 777 start.sh ; ./start.sh ; rm start.sh
