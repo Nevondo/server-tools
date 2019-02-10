@@ -29,16 +29,21 @@ borg create                         \
     --stats                         \
     --show-rc                       \
     --compression %COMPRESSION%     \
+    --exclude '/dev/*'              \
+    --exclude '/proc/*'             \
+    --exclude '/sys/*'              \
+    --exclude '/tmp/*'              \
+    --exclude '/run/*'              \
+    --exclude '/mnt/*'              \
+    --exclude '/media/*'            \
+    --exclude '/srv/*'              \
+    --exclude '/lost+found/*'       \
     --exclude '/home/*/.cache/*'    \
     --exclude '/var/cache/*'        \
     --exclude '/var/tmp/*'          \
                                     \
     ::'{hostname}-{now}'            \
-    /etc                            \
-    /home                           \
-    /root                           \
-    /var                            \
-    /opt                            \
+    /                               \
 
 backup_exit=$?
 
