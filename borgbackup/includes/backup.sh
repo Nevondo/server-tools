@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if [ ! -f precmd.sh ]; then
-    source precmd.sh
+if [ -f %BACKUP_SH_DIR%/precmd.sh ]; then
+    source %BACKUP_SH_DIR%/precmd.sh
 fi
 
 

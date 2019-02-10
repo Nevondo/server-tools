@@ -91,6 +91,8 @@ function setupScript {
     sed -i 's|%REPO_PATH%|'$repo_path'|g' $BACKUP_SH_PATH
     sed -i "s/%PASSPHRASE%/$password/g" $BACKUP_SH_PATH
     sed -i "s/%COMPRESSION%/$compression/g" $BACKUP_SH_PATH
+    sed -i "s/%BACKUP_SH_DIR%/$BACKUP_SH_DIR/g" $BACKUP_SH_PATH
+
 
     chmod 777 $BACKUP_SH_PATH
 
