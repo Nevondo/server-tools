@@ -1,6 +1,7 @@
 #!/bin/bash
 
 BACKUP_SH="https://git.codeink.de/CodeInk/server-tools/raw/master/borgbackup/includes/backup.sh"
+BACKUP_SH_DIR="/opt/borgbackup/"
 BACKUP_SH_PATH="/opt/borgbackup/backup.sh"
 
 ##
@@ -81,23 +82,35 @@ function showSSHKey {
 }
 
 function setupScript {
-    mkdir -p /opt/borgbackup
+    mkdir -p $BACKUP_SH_DIR
 
     wget $BACKUP_SH -O $BACKUP_SH_PATH
     
     sed -i "s/%USER%/$user/g" $BACKUP_SH_PATH
     sed -i "s/%HOST%/$host/g" $BACKUP_SH_PATH
-    #sed -i "s/%REPO_PATH%/$repo_path/g" $BACKUP_SH_PATH
     sed -i 's|%REPO_PATH%|'$repo_path'|g' $BACKUP_SH_PATH
-    #sed "s~%REPO_PATH%~$repo_path~" $BACKUP_SH_PATH
     sed -i "s/%PASSPHRASE%/$password/g" $BACKUP_SH_PATH
     sed -i "s/%COMPRESSION%/$compression/g" $BACKUP_SH_PATH
+
+    chmod 777 $BACKUP_SH_PATH
 
 }
 
 function initRepo {
-    export BORG_REPO=ssh://$user@$host:22/$repo_path
+    export BORG_REPO=ssh:/$user@$host:22/$repo_path
     borg init 
+}
+
+function preCmd {
+    yellowMessage "Are there commands or scripts that should be executed before the backup? \n"
+    read -p"(y/n)? " response_pre
+    if [ "$response" == "y" ]; then
+        nano $BACKUP_SH_DIR/precmd.sh
+    fi
+}
+
+function addCronTab {
+    echo "0 3	* * *	root	"$BACKUP_SH_PATH" )" > /etc/cron.d/borgbackup
 }
 
 install
@@ -108,9 +121,5 @@ genSSHKey
 showSSHKey
 setupScript
 initRepo
-
-
-
-
-
-#wget  https://git.codeink.de/CodeInk/server-tools/raw/master/borgbackup/start.sh; chmod 777 start.sh ; ./start.sh ; rm start.sh
+preCmd
+addCronTab
