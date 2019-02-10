@@ -100,7 +100,8 @@ function setupScript {
 }
 
 function initRepo {
-    export BORG_REPO=ssh://$user@$host:22/$repo_path
+    yellowMessage "Repository Passphrase:"
+    export BORG_REPO=ssh://$user@$host:22$repo_path
     borg init 
 }
 
@@ -121,6 +122,7 @@ motd
 checkRootUser
 readAuth
 genSSHKey
+motd
 showSSHKey
 setupScript
 initRepo
