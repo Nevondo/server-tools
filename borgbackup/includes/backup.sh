@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Setting this, so the repo does not need to be given on the commandline:
-export BORG_REPO=ssh://%USER%@%HOST%:22/%PATH%
+export BORG_REPO=ssh://%USER%@%HOST%:22/%REPO_PATH%
 
 # Setting this, so you won't be asked for your repository passphrase:
 export BORG_PASSPHRASE='%PASSPHRASE%'
