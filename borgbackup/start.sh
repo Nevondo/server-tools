@@ -59,7 +59,7 @@ function readAuth {
     echo -e "\nRemote User:\n"
     read user
     echo -e "\nRepository Compression:\n"
-    read path
+    read compression
     echo -e "\nRepository Path:\n"
     read path
     echo -e "\nRepository Passphrase:\n"
@@ -89,6 +89,7 @@ function setupScript {
     sed -i "s/%HOST%/$host/g" $BACKUP_SH_PATH
     sed -i "s/%PATH%/$path/g" $BACKUP_SH_PATH
     sed -i "s/%PASSPHRASE%/$password/g" $BACKUP_SH_PATH
+    sed -i "s/%COMPRESSION%/$compression/g" $BACKUP_SH_PATH
 
 }
 
