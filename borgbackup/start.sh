@@ -114,7 +114,7 @@ function preCmd {
 }
 
 function addCronTab {
-    echo "0 3	* * *	root	"$BACKUP_SH_PATH" )" > /etc/cron.d/borgbackup
+    echo "0 3	* * *	root	"$BACKUP_SH_PATH" " > /etc/cron.d/borgbackup
 }
 
 install
