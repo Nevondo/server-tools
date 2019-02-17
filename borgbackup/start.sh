@@ -66,15 +66,15 @@ function readAuth {
     echo -e "\nRepository Passphrase:\n"
     read -s password
     echo -e "\nMail From:\n"
-    read -s mail_from
+    read mail_from
     echo -e "\nMail To:\n"
-    read -s mail_to
+    read mail_to
     echo -e "\nMail User:\n"
-    read -s mail_user
-    echo -e "\nMail Password:\n"
-    read -s mail_password
+    read mail_user
+    echo -s "\nMail Password:\n"
+    read mail_password
     echo -e "\nMail Server:\n"
-    read -s mail_server
+    read mail_server
 }
 
 function genSSHKey {

@@ -1,10 +1,12 @@
 #!/bin/bash
 
+ALWAYS_MAIL=false
+
 LOG="%BACKUP_SH_DIR%backup.log"
 exec > >(tee -i ${LOG})
 exec 2>&1
 
-echo -e "From: BorgBackup <%MAILFROM%> \nTo: Admin <%MAILTO%> \nSubject: Backup failed \n\n"
+echo -e "From: BorgBackup <%MAILFROM%> \nTo: Admin <%MAILTO%> \nSubject: Backup %STATUS% \n\n"
 
 echo "###### Starting on $(date) ######"
 
@@ -65,6 +67,7 @@ then
     echo "###########################################"
     echo "Backup and/or Prune finished with a warning"
     echo "###########################################"
+    sed -i "s|%STATUS%|FAILED|g" $LOG
     curl --url 'smtps://%MAILSERVER%:465' --ssl-reqd --mail-from '%MAILFROM%' --mail-rcpt '%MAILTO%' --upload-file $LOG --user '%MAILUSER%:%MAILPASSWORD%'
 fi
 
@@ -73,8 +76,17 @@ then
     echo "###########################################"
     echo "Backup and/or Prune finished with an error"
     echo "###########################################"
+    sed -i "s|%STATUS%|FAILED|g" $LOG
+    curl --url 'smtps://%MAILSERVER%:465' --ssl-reqd --mail-from '%MAILFROM%' --mail-rcpt '%MAILTO%' --upload-file $LOG --user '%MAILUSER%:%MAILPASSWORD%'
+fi
+
+if [ ! ${ALWAYS_MAIL} = false ];
+then
+    if [ ${global_exit} = 0 ];
+    then
+        sed -i "s|%STATUS%|Successful|g" $LOG
+        curl --url 'smtps://%MAILSERVER%:465' --ssl-reqd --mail-from '%MAILFROM%' --mail-rcpt '%MAILTO%' --upload-file $LOG --user '%MAILUSER%:%MAILPASSWORD%'
+    fi
 fi
 
 exit ${global_exit}
-
-curl --url 'smtps://%MAILSERVER%:465' --ssl-reqd --mail-from '%MAILFROM%' --mail-rcpt '%MAILTO%' --upload-file $LOG --user '%MAILUSER%:%MAILPASSWORD%'
