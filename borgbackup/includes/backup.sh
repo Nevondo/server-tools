@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ALWAYS_MAIL=false
+ALWAYS_MAIL="true"
 
 LOG="%BACKUP_SH_DIR%backup.log"
 exec > >(tee -i ${LOG})
@@ -80,7 +80,7 @@ then
     curl --url 'smtps://%MAILSERVER%:465' --ssl-reqd --mail-from '%MAILFROM%' --mail-rcpt '%MAILTO%' --upload-file $LOG --user '%MAILUSER%:%MAILPASSWORD%'
 fi
 
-if [ ! ${ALWAYS_MAIL} = false ];
+if [ ${ALWAYS_MAIL} = "true" ];
 then
     if [ ${global_exit} = 0 ];
     then

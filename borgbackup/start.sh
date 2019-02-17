@@ -71,8 +71,8 @@ function readAuth {
     read mail_to
     echo -e "\nMail User:\n"
     read mail_user
-    echo -s "\nMail Password:\n"
-    read mail_password
+    echo -e "\nMail Password:\n"
+    read -s mail_password
     echo -e "\nMail Server:\n"
     read mail_server
 }
