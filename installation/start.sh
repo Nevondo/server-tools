@@ -13,10 +13,10 @@ function RunChecks {
         echo "You are not root! Abort."
         exit
     fi
-	
-	if lscpu | grep "Hypervisor vendor:     KVM"; then
-		VIRTUAL_HOST=true
-	fi
+    
+    if lscpu | grep "Hypervisor vendor:     KVM"; then
+        VIRTUAL_HOST=true
+    fi
 }
 
 function Update {
@@ -60,10 +60,10 @@ function SetupQemuAgent {
 
 function SetupFsTrim {
     if "$VIRTUAL_HOST" ; then
-		rm /etc/cron.weekly/trim
+        rm /etc/cron.weekly/trim
         echo "#!/bin/bash" >> /etc/cron.weekly/trim
-		echo "/sbin/fstrim --all || true" >> /etc/cron.weekly/trim
-		chmod +x /etc/cron.weekly/trim
+        echo "/sbin/fstrim --all || true" >> /etc/cron.weekly/trim
+        chmod +x /etc/cron.weekly/trim
     fi
 }
 
