@@ -21,12 +21,12 @@ function RunChecks {
 
 function Update {
     apt-get update
-    apt-get dist-upgrade -y
-    apt-get autoremove -y
+    echo Y |  apt-get dist-upgrade
+    echo Y | apt-get autoremove
 }
 
 function InstallPackages {
-    apt-get install aptitude molly-guard htop iftop parted tree vim curl screen screenfetch net-tools byobu xinetd -y
+    echo Y | apt-get install aptitude molly-guard htop iftop parted tree vim curl screen screenfetch net-tools byobu xinetd
 }
 
 function SetupMonitoring {
@@ -54,7 +54,7 @@ function SetupSsh {
 
 function SetupQemuAgent {
     if "$VIRTUAL_HOST" ; then
-        apt-get install qemu-guest-agent -y
+        echo Y | apt-get install qemu-guest-agent
     fi
 }
 
