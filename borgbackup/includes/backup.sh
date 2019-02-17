@@ -1,7 +1,11 @@
 #!/bin/bash
 
+LOG="%BACKUP_SH_DIR%backup.log"
 exec > >(tee -i ${LOG})
 exec 2>&1
+
+echo -e "From: BorgBackup <%MAILFROM%> \nTo: Admin <%MAILTO%> \nSubject: Backup failed \n\n"
+
 echo "###### Starting on $(date) ######"
 
 if [ -f %BACKUP_SH_DIR%precmd.sh ]; then
@@ -61,6 +65,7 @@ then
     echo "###########################################"
     echo "Backup and/or Prune finished with a warning"
     echo "###########################################"
+    curl --url 'smtps://%MAILSERVER%:465' --ssl-reqd --mail-from '%MAILFROM%' --mail-rcpt '%MAILTO%' --upload-file $LOG --user '%MAILUSER%:%MAILPASSWORD%'
 fi
 
 if [ ${global_exit} -gt 1 ];
@@ -72,4 +77,4 @@ fi
 
 exit ${global_exit}
 
-echo $LOG > last.log
+curl --url 'smtps://%MAILSERVER%:465' --ssl-reqd --mail-from '%MAILFROM%' --mail-rcpt '%MAILTO%' --upload-file $LOG --user '%MAILUSER%:%MAILPASSWORD%'

@@ -65,6 +65,16 @@ function readAuth {
     read repo_path
     echo -e "\nRepository Passphrase:\n"
     read -s password
+    echo -e "\nMail From:\n"
+    read -s mail_from
+    echo -e "\nMail To:\n"
+    read -s mail_to
+    echo -e "\nMail User:\n"
+    read -s mail_user
+    echo -e "\nMail Password:\n"
+    read -s mail_password
+    echo -e "\nMail Server:\n"
+    read -s mail_server
 }
 
 function genSSHKey {
@@ -94,6 +104,12 @@ function setupScript {
 
     sed -i "s|%BACKUP_SH_DIR%|$BACKUP_SH_DIR|g" $BACKUP_SH_PATH
 
+    sed -i "s|%MAILFROM%|$mail_from|g" $BACKUP_SH_PATH
+    sed -i "s|%MAILTO%|$mail_to|g" $BACKUP_SH_PATH
+    sed -i "s|%MAILUSER%|$mail_user|g" $BACKUP_SH_PATH
+    sed -i "s|%MAILPASSWORD%|$mail_password|g" $BACKUP_SH_PATH
+    sed -i "s|%MAILSERVER%|$mail_server|g" $BACKUP_SH_PATH
+
 
     chmod 777 $BACKUP_SH_PATH
 
@@ -114,7 +130,7 @@ function preCmd {
 }
 
 function addCronTab {
-    echo "0 3	* * *	root	"$BACKUP_SH_PATH" " > /etc/cron.d/borgbackup
+    echo "0 3	* * *	root	"$BACKUP_SH_PATH" >>/tmp/borg.log 2>>/tmp/borg_err.log " > /etc/cron.d/borgbackup
 }
 
 install
