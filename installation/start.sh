@@ -2,16 +2,21 @@
 
 ### Variables ###
 TMP="/tmp"
-CHECK_MK="https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/check-mk-agent_1.5.0p9-1_all.deb"
+CHECK_MK="https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/check-mk-agent.deb"
 BASHRC="https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/.bashrc"
 SSH_KEYS="https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/authorized_keys"
+VIRTUAL_HOST=false
 
 ### Functions ###
-function CheckRootUser {
+function RunChecks {
     if [ "`id -u`" != "0" ]; then
         echo "You are not root! Abort."
         exit
     fi
+	
+	if lscpu | grep "Hypervisor vendor:     KVM"; then
+		VIRTUAL_HOST=true
+	fi
 }
 
 function Update {
@@ -25,8 +30,8 @@ function InstallPackages {
 }
 
 function SetupMonitoring {
-    wget $CHECK_MK -O ${TMP}/check-mk-agent_1.5.0p9-1_all.deb
-    dpkg -i ${TMP}/check-mk-agent_1.5.0p9-1_all.deb
+    wget $CHECK_MK -O ${TMP}/check-mk-agent.deb
+    dpkg -i ${TMP}/check-mk-agent.deb
 }
 
 function SetupScreenfetch {
@@ -48,15 +53,24 @@ function SetupSsh {
 }
 
 function SetupQemuAgent {
-    if lscpu | grep "Hypervisor vendor:     KVM"; then
+    if "$VIRTUAL_HOST" ; then
         apt install qemu-guest-agent -y
+    fi
+}
+
+function SetupFsTrim {
+    if "$VIRTUAL_HOST" ; then
+		rm /etc/cron.weekly/trim
+        echo "#!/bin/bash" >> /etc/cron.weekly/trim
+		echo "/sbin/fstrim --all || true" >> /etc/cron.weekly/trim
+		chmod +x /etc/cron.weekly/trim
     fi
 }
 
 function CleanUp {
     rm /etc/motd -f
     rm /etc/update-motd.d/* -R -f
-    rm ${TMP}/check-mk-agent_1.5.0p9-1_all.deb
+    rm ${TMP}/check-mk-agent.deb
 }
 
 function SetRootPassword {
@@ -69,7 +83,7 @@ function SetRootPassword {
 }
 
 ### Main ###
-CheckRootUser
+RunChecks
 Update
 InstallPackages
 SetupMonitoring
@@ -77,5 +91,6 @@ SetupScreenfetch
 SetupBashrc
 SetupSsh
 SetupQemuAgent
+SetupFsTrim
 CleanUp
 SetRootPassword
