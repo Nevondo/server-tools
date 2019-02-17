@@ -21,7 +21,7 @@ function RunChecks {
 
 function Update {
     apt-get update
-    echo Y |  apt-get dist-upgrade
+    echo Y | apt-get dist-upgrade
     echo Y | apt-get autoremove
 }
 
