@@ -62,7 +62,7 @@ function newClient {
         mkdir "$BASE_PATH/$from"
     fi
     
-    if [ -f "$BASE_PATH/$from/$hostname"]; then
+    if [ -f "$BASE_PATH/$from/$hostname" ]; then
         errorExit "A client with this hostname already exists."
     fi
 
