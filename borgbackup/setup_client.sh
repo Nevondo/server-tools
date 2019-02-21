@@ -131,6 +131,11 @@ function preCmd {
 
 function addCronTab {
     echo "0 3	* * *	root	"$BACKUP_SH_PATH"  > /dev/null 2>&1 " > /etc/cron.d/borgbackup
+    yellowMessage "Do you want to change the cronjob? \n"
+    read -p"(y/n)?" response_crontab
+    if [ "$response_crontab" == "y" ]; then
+        nano /etc/cron.d/borgbackup
+    fi
 }
 
 install
