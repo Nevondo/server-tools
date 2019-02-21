@@ -72,7 +72,7 @@ function SetupLoginNotify {
     mkdir -p /opt/scripts/login-notify/
     rm /opt/scripts/login-notify/login-notify.sh
     rm /etc/ssh/sshrc
-    if ! -f /opt/scripts/login-notify/config.conf ; then
+    if [ ! -f /opt/scripts/login-notify/config.conf ]; then
         echo "API_KEY=" >> /opt/scripts/login-notify/config.conf
         echo "CHAT_ID=" >> /opt/scripts/login-notify/config.conf
         nano /opt/scripts/login-notify/config.conf
