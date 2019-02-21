@@ -73,9 +73,9 @@ function SetupLoginNotify {
     rm /opt/scripts/login-notify/login-notify.sh
     rm /etc/ssh/sshrc
     if [ ! -f /opt/scripts/login-notify/config.conf ]; then
-        echo -e "\n\n Telegram API Key: "
+        echo -e "\n\nTelegram API Key: "
         read telegram_api_key
-        echo -e "\n Telegram Chat ID: "
+        echo -e "\nTelegram Chat ID: "
         read telegram_chat_id
         echo "API_KEY=$telegram_api_key" >> /opt/scripts/login-notify/config.conf
         echo "CHAT_ID=$telegram_chat_id" >> /opt/scripts/login-notify/config.conf
