@@ -1,12 +1,12 @@
 #!/bin/bash
 
-ALWAYS_MAIL="true"
+ALWAYS_MAIL="false"
 
-LOG="%BACKUP_SH_DIR%backup.log"
+LOG="%BACKUP_SH_DIR%/backup.log"
 exec > >(tee -i ${LOG})
 exec 2>&1
 
-echo -e "From: BorgBackup <%MAILFROM%> \nTo: Admin <%MAILTO%> \nSubject: Backup %STATUS% \n\n"
+echo -e "From: BorgBackup <%MAILFROM%> \nTo: Admin <%MAILTO%> \nSubject: $(hostname) Backup %STATUS% \n\n"
 
 echo "###### Starting on $(date) ######"
 
