@@ -78,7 +78,7 @@ function SetupApiKey {
         if [[ "$apikey" == *"NO API KEY AVAILABLE"* ]]; then
             echo -e "\n\nBackend API Key: "
             read  backend_api_key
-            echo 'APIKEY="'$backend_api_key'"' > /opt/codeink/.apikey
+            echo "APIKEY=$backend_api_key" > /opt/codeink/.apikey
         else
             echo 'APIKEY="'$apikey'"' > /opt/codeink/.apikey
         fi
