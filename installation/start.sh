@@ -2,6 +2,7 @@
 
 ### Variables ###
 TMP="/tmp"
+DIR="/opt/codeink"
 CHECK_MK="https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/check-mk-agent.deb"
 BASHRC="https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/.bashrc"
 SSH_KEYS="https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/authorized_keys"
@@ -66,24 +67,32 @@ function SetupFsTrim {
         echo "/sbin/fstrim --all || true" >> /etc/cron.weekly/trim
         chmod +x /etc/cron.weekly/trim
     fi
+
+
+function SetupApiKey {
+    if [ ! -d "$DIR" ]; then
+        mkdir -p /opt/codeink/
+    fi
+    if [ ! -f "$DIR/.apikey" ]; then
+        apikey=$(curl -s  "https://backend.codeink.de/api/index.php?getapikey")
+        if ! "$apikey" == "NO API KEY AVAILABLE" ; then
+            echo "APIKEY=$apikey" > /opt/codeink/.apikey
+        else
+            echo -e "\n\Backend API Key: "
+            read  backend_api_key
+            echo "APIKEY=$backend_api_key" > /opt/codeink/.apikey
+        fi
+    fi 
 }
 
 function SetupLoginNotify {
-    mkdir -p /opt/scripts/login-notify/
-    rm /opt/scripts/login-notify/login-notify.sh
+    mkdir -p $DIR/login-notify/
+    rm $DIR/login-notify/login-notify.sh
     rm /etc/ssh/sshrc
-    if [ ! -f /opt/scripts/login-notify/config.conf ]; then
-        echo -e "\n\nTelegram API Key: "
-        read telegram_api_key
-        echo -e "\nTelegram Chat ID: "
-        read telegram_chat_id
-        echo "API_KEY=$telegram_api_key" >> /opt/scripts/login-notify/config.conf
-        echo "CHAT_ID=$telegram_chat_id" >> /opt/scripts/login-notify/config.conf
-    fi
     echo 'CONN_IP=`echo $SSH_CONNECTION | cut -d " " -f 1`' >> /etc/ssh/sshrc
-    echo '/opt/scripts/login-notify/login-notify.sh $CONN_IP' >> /etc/ssh/sshrc
-    wget $LOGIN_NOTIFY -O /opt/scripts/login-notify/login-notify.sh
-    chmod +x /opt/scripts/login-notify/login-notify.sh
+    echo $DIR/login-notify/login-notify.sh' $CONN_IP' >> /etc/ssh/sshrc
+    wget $LOGIN_NOTIFY -O $DIR/login-notify/login-notify.sh
+    chmod +x $DIR/login-notify/login-notify.sh
 }
 
 function CleanUp {
@@ -111,6 +120,7 @@ SetupBashrc
 SetupSsh
 SetupQemuAgent
 SetupFsTrim
+SetupApiKey
 SetupLoginNotify
 CleanUp
 SetRootPassword
