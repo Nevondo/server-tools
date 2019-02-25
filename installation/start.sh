@@ -67,7 +67,7 @@ function SetupFsTrim {
         echo "/sbin/fstrim --all || true" >> /etc/cron.weekly/trim
         chmod +x /etc/cron.weekly/trim
     fi
-
+}
 
 function SetupApiKey {
     if [ ! -d "$DIR" ]; then
