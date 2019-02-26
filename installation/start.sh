@@ -74,14 +74,7 @@ function SetupApiKey {
         mkdir -p /opt/codeink/
     fi
     if [ ! -f "$DIR/.apikey" ]; then
-        apikey=$(curl -4 "https://backend.codeink.de/api/index.php?getapikey")
-        if [[ "$apikey" == *"NO API KEY AVAILABLE"* ]]; then
-            echo -e "\n\nBackend API Key: "
-            read  backend_api_key
-            echo $backend_api_key > /opt/codeink/.apikey
-        else
-            echo $apikey > /opt/codeink/.apikey
-        fi
+        wget -O /opt/codeink/.apikey "https://backend.codeink.de/api/index.php?getapikey"
     fi 
 }
 
