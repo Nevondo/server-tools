@@ -80,7 +80,7 @@ function SetupApiKey {
             read  backend_api_key
             echo "APIKEY=$backend_api_key" > /opt/codeink/.apikey
         else
-            echo "APIKEY=$apikey" > /opt/codeink/.apikey
+            echo $apikey > /opt/codeink/.apikey
         fi
     fi 
 }
