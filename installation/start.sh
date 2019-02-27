@@ -106,12 +106,15 @@ function CleanUp {
 }
 
 function SetRootPassword {
-    pw=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32 ; echo '')
-    echo "root:$pw" | chpasswd
-    echo "********************************"
-    echo "       New root password        "
-    echo "$pw"
-    echo "********************************"
+    read -p"New Root Password (y/n)? " response_new_password
+    if [[ "$response_new_password" == "y" ]]; then
+        pw=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32 ; echo '')
+        echo "root:$pw" | chpasswd
+        echo "********************************"
+        echo "       New root password        "
+        echo "$pw"
+        echo "********************************"
+    fi
 }
 
 ### Main ###
