@@ -36,7 +36,7 @@ function SetupMonitoring {
     dpkg -i ${TMP}/check-mk-agent.deb
 }
 
-function SetupNeofetch{
+function SetupNeofetch {
     if ! grep --quiet neofetch /etc/profile; then
         echo neofetch >> /etc/profile
     fi
