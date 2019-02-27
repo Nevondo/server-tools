@@ -118,6 +118,7 @@ function SetRootPassword {
 RunChecks
 Update
 InstallPackages
+RemoveScreenfetch
 SetupMonitoring
 SetupNeofetch
 SetupBashrc
