@@ -28,7 +28,7 @@ function Update {
 }
 
 function InstallPackages {
-    apt-get install aptitude molly-guard htop iftop parted tree vim curl screen screenfetch net-tools byobu xinetd grepcidr -y
+    apt-get install aptitude molly-guard htop iftop parted tree vim curl screen neofetch net-tools byobu xinetd -y
 }
 
 function SetupMonitoring {
@@ -36,9 +36,9 @@ function SetupMonitoring {
     dpkg -i ${TMP}/check-mk-agent.deb
 }
 
-function SetupScreenfetch {
-    if ! grep --quiet screenfetch /etc/profile; then
-        echo screenfetch >> /etc/profile
+function SetupNeofetch{
+    if ! grep --quiet neofetch /etc/profile; then
+        echo neofetch >> /etc/profile
     fi
 }
 
@@ -113,7 +113,7 @@ RunChecks
 Update
 InstallPackages
 SetupMonitoring
-SetupScreenfetch
+SetupNeofetch
 SetupBashrc
 SetupSsh
 SetupQemuAgent
