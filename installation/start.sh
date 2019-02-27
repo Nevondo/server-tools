@@ -36,6 +36,12 @@ function SetupMonitoring {
     dpkg -i ${TMP}/check-mk-agent.deb
 }
 
+function RemoveScreenfetch {
+    if grep --quiet screenfetch /etc/profile; then
+        sed -i "s|screenfetch||g" /etc/profile
+    fi
+}
+
 function SetupNeofetch {
     if ! grep --quiet neofetch /etc/profile; then
         echo neofetch >> /etc/profile
