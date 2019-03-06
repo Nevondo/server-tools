@@ -2,7 +2,7 @@
 
 ### Variables ###
 TMP="/tmp"
-DIR="/opt/codeink"
+CDNK_DIR="/opt/codeink"
 CHECK_MK="https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/check-mk-agent.deb"
 BASHRC="https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/.bashrc"
 SSH_KEYS="https://git.codeink.de/CodeInk/server-tools/raw/master/installation/includes/authorized_keys"
@@ -40,6 +40,7 @@ function RemoveScreenfetch {
     if grep --quiet screenfetch /etc/profile; then
         sed -i "s|screenfetch||g" /etc/profile
     fi
+    apt-get purge screenfetch -y
 }
 
 function SetupNeofetch {
@@ -75,39 +76,43 @@ function SetupFsTrim {
     fi
 }
 
-function SetupApiKey {
-    if [ ! -d "$DIR" ]; then
-        mkdir -p /opt/codeink/
-    fi
-    if [ ! -f "$DIR/.apikey" ]; then
-        APIKEY=`curl -4 "https://backend.codeink.de/api/index.php?getapikey"`
-        if [[ "$APIKEY" == *"NO API KEY AVAILABLE"* ]]; then
-            echo -e "\n\nBackend API Key: "
-            read APIKEY
+function SetupCodeInkEnvironment {
+    read -p "Setup CodeInk Environment (y/n)? " response
+    if [[ "$response" == "y" ]]; then
+        if [ ! -d "$CDNK_DIR" ]; then
+            mkdir -p $CDNK_DIR
         fi
-        echo $APIKEY > $DIR/.apikey
-    fi 
-}
 
-function SetupLoginNotify {
-    mkdir -p $DIR/login-notify/
-    rm $DIR/login-notify/login-notify.sh
-    rm /etc/ssh/sshrc
-    echo 'CONN_IP=`echo $SSH_CONNECTION | cut -d " " -f 1`' >> /etc/ssh/sshrc
-    echo $DIR/login-notify/login-notify.sh' $CONN_IP' >> /etc/ssh/sshrc
-    wget $LOGIN_NOTIFY -O $DIR/login-notify/login-notify.sh
-    chmod +x $DIR/login-notify/login-notify.sh
+        if [ ! -f "$CDNK_DIR/.apikey" ]; then
+            APIKEY=`curl -4 "https://backend.codeink.de/api/index.php?getapikey"`
+            if [[ "$APIKEY" == *"NO API KEY AVAILABLE"* ]]; then
+                echo -e "\n\nBackend API Key: "
+                read APIKEY
+            fi
+            echo $APIKEY > $CDNK_DIR/.apikey
+        fi 
+
+        mkdir -p $CDNK_DIR/login-notify/
+        rm $CDNK_DIR/login-notify/login-notify.sh
+        rm /etc/ssh/sshrc
+        echo 'CONN_IP=`echo $SSH_CONNECTION | cut -d " " -f 1`' >> /etc/ssh/sshrc
+        echo $CDNK_DIR/login-notify/login-notify.sh' $CONN_IP' >> /etc/ssh/sshrc
+        wget $LOGIN_NOTIFY -O $CDNK_DIR/login-notify/login-notify.sh
+        chmod +x $CDNK_DIR/login-notify/login-notify.sh
+    fi
 }
 
 function CleanUp {
     rm /etc/motd -f
     rm /etc/update-motd.d/* -R -f
     rm ${TMP}/check-mk-agent.deb
+    rm /opt/scripts/login-notify/ -R
+    rmdir /opt/scripts/
 }
 
 function SetRootPassword {
-    read -p"New Root Password (y/n)? " response_new_password
-    if [[ "$response_new_password" == "y" ]]; then
+    read -p "New root password (y/n)? " response
+    if [[ "$response" == "y" ]]; then
         pw=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32 ; echo '')
         echo "root:$pw" | chpasswd
         echo "********************************"
@@ -121,14 +126,13 @@ function SetRootPassword {
 RunChecks
 Update
 InstallPackages
-RemoveScreenfetch
 SetupMonitoring
 SetupNeofetch
 SetupBashrc
 SetupSsh
 SetupQemuAgent
 SetupFsTrim
-SetupApiKey
-SetupLoginNotify
+SetupCodeInkEnvironment
 CleanUp
+RemoveScreenfetch
 SetRootPassword
