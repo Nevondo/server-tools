@@ -77,7 +77,7 @@ function SetupFsTrim {
 
 function SetupCodeInkEnvironment {
     if [ ! -d "$CDNK_DIR" ]; then
-        read -p "Setup CodeInk Environment (y/n)? " response
+        read -p "Setup CodeInk Backend Environment (y/n)? " response
         if [[ "$response" == "y" ]]; then
             mkdir -p $CDNK_DIR
 
