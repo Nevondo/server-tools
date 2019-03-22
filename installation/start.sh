@@ -133,6 +133,6 @@ SetupSsh
 SetupQemuAgent
 SetupFsTrim
 SetupCodeInkEnvironment
-CleanUp
 RemoveScreenfetch
+CleanUp
 SetRootPassword
