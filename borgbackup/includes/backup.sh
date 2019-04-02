@@ -50,7 +50,6 @@ echo "###### Pruning repository ######"
 
 borg prune                          \
     --list                          \
-    --prefix '{hostname}-'          \
     --show-rc                       \
     --keep-daily    30              \
     --keep-weekly   12              \
