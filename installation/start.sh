@@ -75,38 +75,15 @@ function SetupFsTrim {
     fi
 }
 
-function SetupCodeInkEnvironment {
-    if [ ! -d "$CDNK_DIR" ]; then
-        read -p "Setup CodeInk Backend Environment (y/n)? " response
-        if [[ "$response" == "y" ]]; then
-            mkdir -p $CDNK_DIR
-
-            if [ ! -f "$CDNK_DIR/.apikey" ]; then
-                APIKEY=`curl -4 "https://backend.codeink.de/api/index.php?getapikey"`
-                if [[ "$APIKEY" == *"NO API KEY AVAILABLE"* ]]; then
-                    echo -e "\n\nBackend API Key: "
-                    read APIKEY
-                fi
-                echo $APIKEY > $CDNK_DIR/.apikey
-            fi 
-
-            mkdir -p $CDNK_DIR/login-notify/
-            rm $CDNK_DIR/login-notify/login-notify.sh
-            rm /etc/ssh/sshrc
-            echo 'CONN_IP=`echo $SSH_CONNECTION | cut -d " " -f 1`' >> /etc/ssh/sshrc
-            echo $CDNK_DIR/login-notify/login-notify.sh' $CONN_IP' >> /etc/ssh/sshrc
-            wget $LOGIN_NOTIFY -O $CDNK_DIR/login-notify/login-notify.sh
-            chmod +x $CDNK_DIR/login-notify/login-notify.sh
-        fi
-    fi
-}
 
 function CleanUp {
     rm /etc/motd -f
     rm /etc/update-motd.d/* -R -f
     rm ${TMP}/check-mk-agent.deb
-    rm /opt/scripts/login-notify/ -R
+    rm /opt/scripts/login-notify/ -R -f
+    rm /opt/codeink/ -R -f
     rmdir /opt/scripts/
+    apt-get purge screenfetch
     apt-get autoremove -y
 }
 
