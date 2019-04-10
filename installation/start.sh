@@ -82,6 +82,7 @@ function CleanUp {
     rm /opt/scripts/login-notify/ -R -f
     rm /opt/codeink/ -R -f
     rmdir /opt/scripts/
+    rm /etc/ssh/sshrc
     apt-get purge screenfetch -y
     apt-get autoremove -y
 }
