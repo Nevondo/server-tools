@@ -109,7 +109,6 @@ SetupBashrc
 SetupSsh
 SetupQemuAgent
 SetupFsTrim
-SetupCodeInkEnvironment
 RemoveScreenfetch
 CleanUp
 SetRootPassword
