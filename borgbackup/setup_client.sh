@@ -1,8 +1,8 @@
 #!/bin/bash
 
 BACKUP_SH="https://git.codeink.de/CodeInk/server-tools/raw/master/borgbackup/includes/backup.sh"
-BACKUP_SH_DIR="/opt/scripts/borgbackup/"
-BACKUP_SH_PATH="/opt/scripts/borgbackup/backup.sh"
+BACKUP_SH_DIR="/opt/borgbackup/"
+BACKUP_SH_PATH="/opt/borgbackup/backup.sh"
 
 ##
 #
