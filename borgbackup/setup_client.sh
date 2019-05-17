@@ -118,7 +118,7 @@ function setupScript {
 function initRepo {
     yellowMessage "Repository Passphrase:"
     export BORG_REPO=ssh://$user@$host:22$repo_path
-    borg init 
+    borg init -e keyfile
 }
 
 function preCmd {
