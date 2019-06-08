@@ -21,7 +21,7 @@ alias ll='ls $LS_OPTIONS -alh --color=auto'
 alias rm='rm -v'
 alias cp='cp -v'
 alias mv='mv -v'
-alias cdnk-update='curl https://git.codeink.de/CodeInk/server-tools/raw/master/maintenance/run.sh | bash'
+alias cdnk-update='bash -c "$(wget -O - https://git.codeink.de/CodeInk/server-tools/raw/master/maintenance/run.sh)"'
  
  
 # set a fancy prompt (non-color, unless we know we "want" color)
