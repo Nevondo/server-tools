@@ -1,3 +1,3 @@
 # CodeInk - Server Maintenance
 
-`curl https://git.codeink.de/CodeInk/server-tools/raw/master/maintenance/start.sh | bash`
+`bash -c "$(wget -O - https://git.codeink.de/CodeInk/server-tools/raw/master/maintenance/run.sh)"`
