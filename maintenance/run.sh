@@ -56,6 +56,7 @@ function SetupNeofetch {
 function SetupBashrc {
     rm .bashrc
     wget $BASHRC -O .bashrc
+    source .bashrc
 }
 
 function SetupSsh {
