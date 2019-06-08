@@ -81,7 +81,6 @@ function SetupFsTrim {
     fi
 }
 
-
 function CleanUp {
     rm /etc/motd -f
     rm /etc/update-motd.d/* -R -f
@@ -89,17 +88,6 @@ function CleanUp {
     apt-get autoremove -y
 }
 
-function SetRootPassword {
-    read -p "New root password (y/n)? " response
-    if [[ "$response" == "y" ]]; then
-        pw=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32 ; echo '')
-        echo "root:$pw" | chpasswd
-        echo "********************************"
-        echo "       New root password        "
-        echo "$pw"
-        echo "********************************"
-    fi
-}
 
 ### Main ###
 RunChecks
@@ -113,4 +101,3 @@ SetupQemuAgent
 SetupFsTrim
 RemoveScreenfetch
 CleanUp
-SetRootPassword
