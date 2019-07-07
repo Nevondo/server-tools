@@ -5,7 +5,6 @@ TMP="/tmp"
 CHECK_MK="https://git.codeink.de/CodeInk/server-tools/raw/master/maintenance/includes/check-mk-agent.deb"
 BASHRC="https://git.codeink.de/CodeInk/server-tools/raw/master/maintenance/includes/.bashrc"
 SSH_KEYS="https://git.codeink.de/CodeInk/server-tools/raw/master/maintenance/includes/authorized_keys"
-LOGIN_NOTIFY="https://git.codeink.de/CodeInk/server-tools/raw/master/maintenance/includes/login-notify.sh"
 VIRTUAL_HOST=false
 
 ### Functions ###
