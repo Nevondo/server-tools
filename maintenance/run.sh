@@ -35,8 +35,10 @@ function InstallPackages {
 }
 
 function SetupMonitoring {
-    wget $CHECK_MK -O ${TMP}/check-mk-agent.deb
-    dpkg -i ${TMP}/check-mk-agent.deb
+    wget_output=$(wget $CHECK_MK -O "${TMP}/check-mk-agent.deb")
+    if [ $? -ne 0 ]; then
+        dpkg -i ${TMP}/check-mk-agent.deb
+    fi
 }
 
 function RemoveScreenfetch {
@@ -53,13 +55,19 @@ function SetupNeofetch {
 }
 
 function SetupBashrc {
-    rm .bashrc
-    wget $BASHRC -O .bashrc
+    wget_output=$(wget $BASHRC -O "${TMP}/bashrc")
+    if [ $? -ne 0 ]; then
+        rm /root/.bashrc
+        mv ${TMP}/bashrc /root/.bashrc
+    fi
 }
 
 function SetupSsh {
     mkdir /root/.ssh/
-    wget $SSH_KEYS -O /root/.ssh/authorized_keys
+    wget_output=$(wget $SSH_KEYS -O "${TMP}/authorized_keys")
+    if [ $? -ne 0 ]; then
+        mv ${TMP}/authorized_keys /root/.ssh/authorized_keys
+    fi
     sed -i "/^[#?]*PasswordAuthentication[[:space:]]/c\PasswordAuthentication no" /etc/ssh/sshd_config
     systemctl restart ssh
 }
