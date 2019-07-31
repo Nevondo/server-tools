@@ -36,7 +36,7 @@ function InstallPackages {
 
 function SetupMonitoring {
     wget_output=$(wget $CHECK_MK -O "${TMP}/check-mk-agent.deb")
-    if [ $? -ne 0 ]; then
+    if [ ! $? -ne 0 ]; then
         dpkg -i ${TMP}/check-mk-agent.deb
     fi
 }
@@ -56,7 +56,7 @@ function SetupNeofetch {
 
 function SetupBashrc {
     wget_output=$(wget $BASHRC -O "${TMP}/bashrc")
-    if [ $? -ne 0 ]; then
+    if [ ! $? -ne 0 ]; then
         rm /root/.bashrc
         mv ${TMP}/bashrc /root/.bashrc
     fi
@@ -65,7 +65,7 @@ function SetupBashrc {
 function SetupSsh {
     mkdir /root/.ssh/
     wget_output=$(wget $SSH_KEYS -O "${TMP}/authorized_keys")
-    if [ $? -ne 0 ]; then
+    if [ ! $? -ne 0 ]; then
         mv ${TMP}/authorized_keys /root/.ssh/authorized_keys
     fi
     sed -i "/^[#?]*PasswordAuthentication[[:space:]]/c\PasswordAuthentication no" /etc/ssh/sshd_config
