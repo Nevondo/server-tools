@@ -41,13 +41,6 @@ function SetupMonitoring {
     fi
 }
 
-function RemoveScreenfetch {
-    if grep --quiet screenfetch /etc/profile; then
-        sed -i "s|screenfetch||g" /etc/profile
-    fi
-    apt-get purge screenfetch -y
-}
-
 function SetupNeofetch {
     if ! grep --quiet neofetch /etc/profile; then
         echo neofetch >> /etc/profile
@@ -117,6 +110,5 @@ SetupBashrc
 SetupSsh
 SetupQemuAgent
 SetupFsTrim
-RemoveScreenfetch
 CleanUp
 SetRootPassword
