@@ -23,7 +23,7 @@ function checkDependencies {
 }
 
 function insertBlocklist {
-    wget -O blocklist.pl https://git.codeink.de/CodeInk/server-tools/raw/master/blocklist/blocklist.pl
+    wget -O blocklist.pl https://git.nevondo.com/Nevondo/server-tools/raw/master/blocklist/blocklist.pl
     mv blocklist.pl /opt/blocklist.pl
     chmod +x /opt/blocklist.pl
 }

@@ -2,9 +2,9 @@
 
 ### Variables ###
 TMP="/tmp"
-CHECK_MK="https://git.codeink.de/CodeInk/server-tools/raw/master/maintenance/includes/check-mk-agent.deb"
-BASHRC="https://git.codeink.de/CodeInk/server-tools/raw/master/maintenance/includes/.bashrc"
-SSH_KEYS="https://git.codeink.de/CodeInk/server-tools/raw/master/maintenance/includes/authorized_keys"
+CHECK_MK="https://git.nevondo.com/Nevondo/server-tools/raw/master/maintenance/includes/check-mk-agent.deb"
+BASHRC="https://git.nevondo.com/Nevondo/server-tools/raw/master/maintenance/includes/.bashrc"
+SSH_KEYS="https://git.nevondo.com/Nevondo/server-tools/raw/master/maintenance/includes/authorized_keys"
 VIRTUAL_HOST=false
 
 ### Functions ###

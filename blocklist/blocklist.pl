@@ -1,10 +1,10 @@
 ####################################################
 ###### Script to block abusive IP addresses.  ######
-###### https://codeink.de                     ######    
+###### https://nevondo.com                    ######    
 ####################################################
 
 ## Configuration ##
-my $listUrl = "https://blocklist.codeink.de/";
+my $listUrl = "https://blocklist.nevondo.com/";
 my $fileName = "blocklist.tmp";
 my $tmpDir = "/tmp";
 my $file = "$tmpDir/$fileName";

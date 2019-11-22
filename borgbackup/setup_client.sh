@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BACKUP_SH="https://git.codeink.de/CodeInk/server-tools/raw/master/borgbackup/includes/backup.sh"
+BACKUP_SH="https://git.nevondo.com/Nevondo/server-tools/raw/master/borgbackup/includes/backup.sh"
 BACKUP_SH_DIR="/opt/borgbackup/"
 BACKUP_SH_PATH="/opt/borgbackup/backup.sh"
 

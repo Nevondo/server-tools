@@ -1,3 +1,3 @@
 # CodeInk - Server Maintenance
 
-`bash -c "$(wget -O - https://git.codeink.de/CodeInk/server-tools/raw/master/maintenance/run.sh)"`
+`bash -c "$(wget -O - https://git.nevondo.com/Nevondo/server-tools/raw/master/maintenance/run.sh)"`
