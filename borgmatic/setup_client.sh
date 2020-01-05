@@ -72,6 +72,7 @@ function setupClient {
     read password
 
     magentaMessage "\n Generate /etc/borgmatic/config.yaml..."
+    mkdir /etc/borgmatic
     wget_output=$(wget $CONFIG -O "/etc/borgmatic/config.yaml")
     sed -i "s/%HOSTNAME%/$HOSTNAME/g" /etc/borgmatic/config.yaml
     sed -i "s/%PASSWORD%/$password/g" /etc/borgmatic/config.yaml
