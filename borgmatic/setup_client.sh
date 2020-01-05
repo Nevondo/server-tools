@@ -46,6 +46,8 @@ function checkRootUser {
 }
 
 function motd {
+    apt-get update
+    apt-get install figlet
     clear
     figlet "Nevondo.com Borgmatic Scripts"
     echo -e "\n\n\n"
@@ -53,8 +55,12 @@ function motd {
 }
 
 function setupClient {
-    magentaMessage "Install Borg with Borgmatic..."
-    apt-get update
+
+    if [ -d "/etc/borgmatic" ]; then 
+        errorExit "Borgmatic is already installed."
+    fi
+
+    magentaMessage "Install Borg with Borgmatic...\n"
     apt-get install borgmatic
 
     if [ ! -f "/root/.ssh/id_ed25519" ]; then 
