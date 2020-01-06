@@ -102,7 +102,7 @@ function setupClient {
     greenMessage "Store the following public key on the backup server:\n"
     cyanMessage "$(cat /root/.ssh/id_ed25519.pub) \n"
     greenMessage "Then create repo:\n"
-    cyanMessage "borg init $HOSTNAME@backup01.nevondo.com"
+    cyanMessage "borg init $HOSTNAME@backup01.nevondo.com:repo"
 
 }
 
