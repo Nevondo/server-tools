@@ -94,10 +94,15 @@ function setupClient {
 
 
     greenMessage "########################\n\n"
+    greenMessage "Paths:"
     greenMessage "Borgmatic Config File: /etc/borgmatic/config.yaml"
     greenMessage "Public SSH Key: /root/.ssh/id_ed25519.pub"
     greenMessage "Timer File: /etc/systemd/system/borgmatic.timer"
-    greenMessage "\n\n########################"
+    greenMessage "\n\n########################\n"
+    greenMessage "Store the following public key on the backup server:\n"
+    cyanMessage "$(cat /root/.ssh/id_ed25519.pub) \n"
+    greenMessage "Then create repo:\n"
+    cyanMessage "borg init $HOSTNAME@backup01.nevondo.com"
 
 }
 
