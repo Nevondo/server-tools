@@ -111,7 +111,7 @@ storage:
 # At least one of the "keep" options is required for pruning to work.
 retention:
     # Keep all archives within this time interval.
-    keep_within: 3H
+    keep_within: 1H
 
     # Number of minutely archives to keep.
     #keep_minutely: 0
@@ -123,18 +123,18 @@ retention:
     keep_daily: 365
 
     # Number of weekly archives to keep.
-    keep_weekly: 60
+    #keep_weekly: 60
 
     # Number of monthly archives to keep.
-    keep_monthly: 20
+    #keep_monthly: 20
 
     # Number of yearly archives to keep.
-    keep_yearly: 5
+    #keep_yearly: 5
 
     # When pruning, only consider archive names starting with this prefix.
     # Borg placeholders can be used. See the output of "borg help placeholders" for
     # details. Default is "{hostname}-".
-    prefix: sourcehostname
+    prefix: "{hostname}-"
 
 # Consistency checks to run after backups. See
 # https://borgbackup.readthedocs.org/en/stable/usage.html#borg-check and
@@ -150,7 +150,7 @@ consistency:
         - archives
 
     # Restrict the number of checked archives to the last n. Applies only to the "archives" check.
-    check_last: 3
+    check_last: 10
 
 # Shell commands or scripts to execute before and after a backup or if an error has occurred.
 # IMPORTANT: All provided commands and scripts are executed with user permissions of borgmatic.
@@ -164,7 +164,9 @@ hooks:
     # List of one or more shell commands or scripts to execute after creating a backup.
     after_backup:
         - echo "`date` - Backup created."
+        - /etc/borgmatic/mail.sh successful
 
     # List of one or more shell commands or scripts to execute in case an exception has occurred.
     on_error:
         - echo "`date` - Error while creating a backup."
+        - /etc/borgmatic/mail.sh failed

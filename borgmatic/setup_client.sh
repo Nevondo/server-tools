@@ -4,6 +4,7 @@ BACKUP_SERVER="backup01.nevondo.com"
 CONFIG="https://git.nevondo.com/Nevondo/server-tools/raw/master/borgmatic/includes/config.yaml"
 SERVICE="https://git.nevondo.com/Nevondo/server-tools/raw/master/borgmatic/includes/borgmatic.service"
 TIMER="https://git.nevondo.com/Nevondo/server-tools/raw/master/borgmatic/includes/borgmatic.timer"
+MAIL="https://git.nevondo.com/Nevondo/server-tools/raw/master/borgmatic/includes/mail.sh"
 
 
 
@@ -81,6 +82,16 @@ function setupClient {
     wget $SERVICE -O "/etc/systemd/system/borgmatic.service"
     magentaMessage "Download /etc/systemd/system/borgmatic.timer..."
     wget $TIMER -O "/etc/systemd/system/borgmatic.timer"
+
+    magentaMessage "Download /etc/borgmatic/mail.sh..."
+    wget $MAIL -O "/etc/borgmatic/mail.sh"
+    chmod +x "/etc/borgmatic/mail.sh"
+
+    magentaMessage "\n Password for mail dispatch? \n"
+    read mailpassword
+    sed -i "s/%PASSWORD%/$mailpassword/g" /etc/borgmatic/mail.sh
+
+
 
     greenMessage "########################\n\n"
     greenMessage "Borgmatic Config File: /etc/borgmatic/config.yaml"
