@@ -82,6 +82,9 @@ function setupClient {
     wget $SERVICE -O "/etc/systemd/system/borgmatic.service"
     magentaMessage "Download /etc/systemd/system/borgmatic.timer..."
     wget $TIMER -O "/etc/systemd/system/borgmatic.timer"
+    systemctl daemon-reload
+    systemctl enable --now borgmatic.timer
+    systemctl start borgmatic.timer
 
     magentaMessage "Download /etc/borgmatic/mail.sh..."
     wget $MAIL -O "/etc/borgmatic/mail.sh"
