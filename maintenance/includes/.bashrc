@@ -22,6 +22,7 @@ alias rm='rm -v'
 alias cp='cp -v'
 alias mv='mv -v'
 alias nvnd-update='bash -c "$(wget -O - https://git.nevondo.com/Nevondo/server-tools/raw/master/maintenance/run.sh)"'
+alias nd-update='nvnd-update'
  
  
 # set a fancy prompt (non-color, unless we know we "want" color)

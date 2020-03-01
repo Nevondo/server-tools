@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_PATH="/srv/borg/"
+BASE_PATH="/srv/borgbackups"
 
 ##
 #
@@ -28,7 +28,7 @@ function yellowMessage {
 }
 
 function errorExit {
-    $clear
+    clear
     redMessage ${@}
     exit 1
 }
@@ -40,39 +40,37 @@ function checkRootUser {
     fi
 }
 
-function install {
-    apt-get update
-    apt-get install figlet -y
-}
-
 function motd {
     clear
-    figlet "CodeInk BorgSetup"
+    figlet "Nevondo.com Borgmatic Scripts"
     echo -e "\n\n\n"
+
 }
 
 function newClient {
 
-    echo -e "Where does the host come from (e.g. fal-pve01) ? \n"
-    read from
-    echo -e "What is the hostname of the server ? \n"
+    magentaMessage "What is the hostname of the server ? \n"
     read hostname
+    formatted_hostname=$(echo "$hostname" | sed -r 's/\.//g')
 
-    if [ ! -f "$BASE_PATH/$from" ]; then
-        mkdir "$BASE_PATH/$from"
-    fi
-    
-    if [ -f "$BASE_PATH/$from/$hostname" ]; then
+    if [ -d "$BASE_PATH/$formatted_hostname" ]; then
         errorExit "A client with this hostname already exists."
     fi
 
-    adduser --disabled-password --home $BASE_PATH/$from/$hostname $hostname
-    mkdir $BASE_PATH/$from/$hostname/borgrepo
-    chown -R $hostname:$hostname $BASE_PATH/$from/$hostname/borgrepo
+    mkdir -p $BASE_PATH/$formatted_hostname/
+    mkdir -p $BASE_PATH/$formatted_hostname/.ssh
+    touch $BASE_PATH/$formatted_hostname/.ssh/authorized_keys
+    adduser --disabled-password --home $BASE_PATH/$formatted_hostname $formatted_hostname
+    chown -R $formatted_hostname:$formatted_hostname $BASE_PATH/$formatted_hostname
+
+    greenMessage "Username: " $formatted_hostname
+    greenMessage "Home-Path: $BASE_PATH/$formatted_hostname"
 
 }
 
+
+
+
 checkRootUser
-install
 motd
 newClient
