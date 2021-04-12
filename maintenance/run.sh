@@ -68,6 +68,7 @@ function SetupSsh {
 function SetupQemuAgent {
     if "$VIRTUAL_HOST" ; then
         apt-get install qemu-guest-agent -y
+        systemctl start qemu-guest-agent
     fi
 }
 

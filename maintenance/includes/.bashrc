@@ -18,7 +18,7 @@ alias ll='ls $LS_OPTIONS -alh --color=auto'
 # alias l='ls $LS_OPTIONS -lA'
 #
 # Some more alias to avoid making mistakes:
-alias nvnd-update='bash -c "$(wget -O - https://git.nevondo.com/Nevondo/server-tools/raw/master/maintenance/run.sh)"'
+alias nupdate='bash -c "$(wget -O - https://git.nevondo.com/Nevondo/server-tools/raw/master/maintenance/run.sh)"'
  
  
 # set a fancy prompt (non-color, unless we know we "want" color)
