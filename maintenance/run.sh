@@ -29,13 +29,6 @@ function InstallPackages {
 }
 
 function SetupMonitoring {
-    systemctl stop check-mk*
-    systemctl disable check_mk*
-    rm /etc/systemd/system/check_mk*
-    rm /usr/lib/systemd/system/check-mk*
-    rm /usr/lib/systemd/system/cmk-agent-ctl-daemon.service
-    systemctl daemon-reload
-    systemctl reset-failed
     wget_output=$(wget $CHECK_MK -O "${TMP}/check-mk-agent.deb")
     if [ ! $? -ne 0 ]; then
         dpkg -i ${TMP}/check-mk-agent.deb
