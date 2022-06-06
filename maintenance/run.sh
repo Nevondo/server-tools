@@ -33,6 +33,9 @@ function SetupMonitoring {
     if [ ! $? -ne 0 ]; then
         dpkg -i ${TMP}/check-mk-agent.deb
     fi
+    /var/lib/cmk-agent/scripts/super-server/1_xinetd/setup deploy
+    /var/lib/cmk-agent/scripts/super-server/1_xinetd/setup trigger
+    systemctl restart xinetd
 }
 
 function SetupNeofetch {
