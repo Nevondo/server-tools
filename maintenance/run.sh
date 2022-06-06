@@ -33,8 +33,6 @@ function SetupMonitoring {
     if [ ! $? -ne 0 ]; then
         dpkg -i ${TMP}/check-mk-agent.deb
     fi
-    systemctl stop cmk-agent-ctl-daemon
-    systemctl disable cmk-agent-ctl-daemon
 }
 
 function SetupNeofetch {
