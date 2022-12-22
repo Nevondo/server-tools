@@ -41,7 +41,7 @@ function SetupMonitoring {
 }
 
 function SetupMonitoringPlugins {
-    if !"$VIRTUAL_HOST" ; then
+    if ! "$VIRTUAL_HOST" ; then
         wget_output=$(wget $SMART -O "${TMP}/smart")
         if [ ! $? -ne 0 ]; then
             mv ${TMP}/smart /usr/lib/check_mk_agent/plugins/smart
