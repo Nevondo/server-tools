@@ -16,8 +16,8 @@ function RunChecks {
         exit
     fi
 
-    if lscpu | grep "Hypervisor vendor:.*KVM"; then
-        VIRTUAL_HOST=true
+    if systemd-detect-virt | grep "kvm\|lxc"; then
+            VIRTUAL_HOST=true
     fi
 }
 
