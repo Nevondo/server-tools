@@ -16,7 +16,7 @@ function RunChecks {
         exit
     fi
 
-    if lscpu | grep "Hypervisor vendor:   KVM"; then
+    if lscpu | grep "Hypervisor vendor:.*KVM"; then
         VIRTUAL_HOST=true
     fi
 }
