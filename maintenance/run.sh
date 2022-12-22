@@ -102,7 +102,6 @@ function SetupFsTrim {
     fi
 }
 
-
 function CleanUp {
     rm /etc/motd -f
     rm /etc/update-motd.d/* -R -f
