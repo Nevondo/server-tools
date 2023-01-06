@@ -121,7 +121,7 @@ function SetRootPassword {
     fi
 }
 
-### Main ###
+#### Main ####
 RunChecks
 Update
 InstallPackages
