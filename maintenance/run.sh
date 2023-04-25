@@ -5,6 +5,8 @@ TMP="/tmp"
 CHECK_MK="https://git.nevondo.com/Nevondo/server-tools/raw/master/maintenance/includes/check-mk-agent.deb"
 BASHRC="https://git.nevondo.com/Nevondo/server-tools/raw/master/maintenance/includes/.bashrc"
 SSH_KEYS="https://git.nevondo.com/Nevondo/server-tools/raw/master/maintenance/includes/authorized_keys"
+SMART="https://git.nevondo.com/Nevondo/server-tools/raw/master/maintenance/includes/smart"
+PROXMOX_QEMU_BACKUP="https://git.nevondo.com/Nevondo/server-tools/raw/master/maintenance/includes/proxmox_qemu_backup"
 VIRTUAL_HOST=false
 
 ### Functions ###
@@ -14,8 +16,8 @@ function RunChecks {
         exit
     fi
 
-    if lscpu | grep "Hypervisor vendor:   KVM"; then
-        VIRTUAL_HOST=true
+    if systemd-detect-virt | grep "kvm\|lxc"; then
+            VIRTUAL_HOST=true
     fi
 }
 
@@ -37,6 +39,28 @@ function SetupMonitoring {
     /var/lib/cmk-agent/scripts/super-server/1_xinetd/setup trigger
     systemctl restart xinetd
 }
+
+function SetupMonitoringPlugins {
+    if ! "$VIRTUAL_HOST" ; then
+        wget_output=$(wget $SMART -O "${TMP}/smart")
+        if [ ! $? -ne 0 ]; then
+            mv ${TMP}/smart /usr/lib/check_mk_agent/plugins/smart
+            chmod +x /usr/lib/check_mk_agent/plugins/smart
+        fi
+
+        wget_output=0
+
+        wget_output=$(wget $PROXMOX_QEMU_BACKUP -O "${TMP}/proxmox_qemu_backup")
+        if [ ! $? -ne 0 ]; then
+            mv ${TMP}/proxmox_qemu_backup /usr/lib/check_mk_agent/plugins/proxmox_qemu_backup
+            chmod +x /usr/lib/check_mk_agent/plugins/proxmox_qemu_backup
+        fi
+
+        systemctl restart xinetd
+
+    fi
+}
+
 
 function SetupNeofetch {
     if ! grep --quiet neofetch /etc/profile; then
@@ -78,7 +102,6 @@ function SetupFsTrim {
     fi
 }
 
-
 function CleanUp {
     rm /etc/motd -f
     rm /etc/update-motd.d/* -R -f
@@ -98,11 +121,12 @@ function SetRootPassword {
     fi
 }
 
-### Main ###
+#### Main ####
 RunChecks
 Update
 InstallPackages
 SetupMonitoring
+SetupMonitoringPlugins
 SetupNeofetch
 SetupBashrc
 SetupSsh
