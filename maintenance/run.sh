@@ -27,7 +27,7 @@ function Update {
 }
 
 function InstallPackages {
-    apt-get install molly-guard htop iftop parted tree vim curl screen neofetch net-tools byobu xinetd -y
+    apt-get install molly-guard htop btop iftop parted tree vim curl screen neofetch net-tools byobu xinetd -y
 }
 
 function SetupMonitoring {
