@@ -19,7 +19,7 @@ alias ll='ls $LS_OPTIONS -alh --color=auto'
 #
 # Some more alias to avoid making mistakes:
 alias nupdate='bash -c "$(wget -O - https://git.nevondo.com/Nevondo/server-tools/raw/master/maintenance/run.sh)"'
- 
+alias codetochat='tree; find . -type f -exec echo "----- {} -----" \; -exec cat {} \;'
  
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
